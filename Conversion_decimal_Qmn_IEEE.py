@@ -1,3 +1,5 @@
+import sys
+
 def fraccion_a_binario(fraccion,precision): #espera un número decimal sin parte entera
     equivalente_binario = "" ##guarda el equivalente binario de la fraccion
     entero = 0 ##almacena la parte entera
@@ -172,7 +174,6 @@ def IEEE_a_decimal():
             mantisa_original = mantisa_original + i
         if numero_iteraciones > 38:
             break 
-    print("Mantisa: ",mantisa_original)
     
     for i in exponente_binario_original: #Se convierte E a decimal
         contador_potencia = contador_potencia - 1
@@ -195,7 +196,6 @@ def IEEE_a_decimal():
         if i == "1":
             entero_decimal = entero_decimal + 2**contador_potencia
     entero_decimal = int(entero_decimal)
-    print("El entero es: ",entero_decimal)
     
     numero_iteraciones = 0
     for i in mantisa_original: #guardamos la parte de la mantisa que corresponde al fraccionario 
@@ -218,10 +218,33 @@ print("Dispositivos programables. Grupo 4TM1. Semestre 2020/2021-2")
 print("Ingeniería Telemática. UPIITA-IPN")
 print("Mora Guerrero León Sergio")
 
-#decimal_a_Q88()
-#Q88_a_decimal()
-decimal_a_IEEE()
-IEEE_a_decimal()
+while 1:
+    opcion_valida = 0
+    while opcion_valida == 0: 
+        print("1. Conversión de decimal a Q8.8 con signo")
+        print("2. Conversión de formato Q8.8 con signo a decimal")
+        print("3. Conversión de decimal a formato IEEE-754")
+        print("4. Conversión de formato IEEE-754 a decimal")
+        print("5. Salir")
+        opcion = int(input("Escoja la opción deseada\n"))
+        
+        if opcion>0 and opcion<5:
+            opcion_valida = 1
+            if opcion == 1:
+                decimal_a_Q88()
+            elif opcion == 2:
+                Q88_a_decimal()
+            elif opcion == 3:
+                decimal_a_IEEE()
+            elif opcion == 4:
+                IEEE_a_decimal()
+            elif opcion == 5:
+                print("Hasta luego :D")
+                sys.exit()
+        else:
+            print("Opción no valida")
+
+
          
     
     
