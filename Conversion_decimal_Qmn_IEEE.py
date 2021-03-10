@@ -145,6 +145,10 @@ def IEEE_a_decimal():
     contador_potencia = 8
     binarios_del_entero = "1" #almacena los binarios de la mantisa que corresponden al numero entero 
     entero_decimal = 0 #almacena la parte entera del decimal 
+    mantisa_fraccionaria = "" #almacena los bits ubicados en la mantisa correspondientes solamente al fraccionario 
+    fraccion_decimal = 0 #almacena la parte fraccionaria en decimal 
+    contador_potencia_negativa = 0
+    decimal = 0 #almacena la conversión completa a decimal 
     
     numero_binario = input("Introduce el binario a convertir en formato x-xxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx (respetando las separaciones)\n")
     bit_signo = int(numero_binario[0])
@@ -193,7 +197,20 @@ def IEEE_a_decimal():
     entero_decimal = int(entero_decimal)
     print("El entero es: ",entero_decimal)
     
-               
+    numero_iteraciones = 0
+    for i in mantisa_original: #guardamos la parte de la mantisa que corresponde al fraccionario 
+        numero_iteraciones = numero_iteraciones + 1
+        if numero_iteraciones > exponente_base_dos:
+            mantisa_fraccionaria = mantisa_fraccionaria + i
+    
+    for i in mantisa_fraccionaria: #la mantisa fraccionaria es practicamente la fraccion en binario, asi que solo la convertimos
+        contador_potencia_negativa = contador_potencia_negativa - 1
+        if i == "1":
+            fraccion_decimal = fraccion_decimal + 2**contador_potencia_negativa
+    
+    decimal = entero_decimal + fraccion_decimal 
+    print("El número en formato IEEE {0} en decimal es: {1}".format(numero_binario,signo+str(decimal)))
+                       
         
         
 
