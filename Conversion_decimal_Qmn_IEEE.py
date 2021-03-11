@@ -104,21 +104,27 @@ def decimal_a_IEEE():
     IEEE = "" #almacena la conversión final
     
     numero_decimal = float(input("Introduce un número decimal\n"))
-    
+    print("ND: ",numero_decimal)
     if numero_decimal < 0:
         bit_signo = 1
     else:
         bit_signo = 0
     
     parte_entera = int(numero_decimal)
+    print("Parte entera: ",parte_entera)
     parte_decimal = abs(numero_decimal)-abs(parte_entera)
+    print("Parte decimal: ",parte_decimal)
     
     parte_entera_bin = (bin(parte_entera)[2:])
+    print("Parte entera bin: ",parte_entera_bin)
     parte_decimal_bin = fraccion_a_binario(parte_decimal,15)
+    print("Parte decimal bin: ",parte_decimal_bin)
     
     lugares_recorridos = len(parte_entera_bin) - 1
+    print("Lugares: ",lugares_recorridos)
     exponente = 127 + lugares_recorridos
     exponente_binario = bin(exponente)[2:]
+    print("Exponente : ",exponente_binario)
     
     for i in parte_entera_bin:
         if salto == 1:
@@ -132,6 +138,8 @@ def decimal_a_IEEE():
     
     mantisa = mantisa[:23]
     #print("la longitud de la mantisa es "+str(len(mantisa)))
+    
+    print("Mantisa: ",mantisa)
     
     IEEE = str(bit_signo) + "-" + exponente_binario + "-" + mantisa
     print("El número {0} se representa como {1} en formato IEEE-754".format(numero_decimal, IEEE))
@@ -152,8 +160,11 @@ def IEEE_a_decimal():
     contador_potencia_negativa = 0
     decimal = 0 #almacena la conversión completa a decimal 
     
+    mantisa_decimal = 0 #almacena el equivalente de la mantisa en número decimal 
+    
     numero_binario = input("Introduce el binario a convertir en formato x-xxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx (respetando las separaciones)\n")
     bit_signo = int(numero_binario[0])
+    print("BS: ",bit_signo,"T: ",type(bit_signo))
     if bit_signo == 0:
         signo = " "
     elif bit_signo == 1:
@@ -181,9 +192,18 @@ def IEEE_a_decimal():
             exponente_original = exponente_original + 2**contador_potencia
     
     exponente_base_dos = exponente_original - 127
-    numero_iteraciones = 0
     
-    for i in mantisa_original: #recuperamos los elementos de la mantisa que corresponden al entero considerando el primer 1
+    numero_iteraciones = 0
+    for i in mantisa_original: #Conversion de la mantisa en decimal 
+        contador_potencia_negativa = contador_potencia_negativa - 1
+        if i == "1":
+            mantisa_decimal = mantisa_decimal + 2**contador_potencia_negativa
+    
+    decimal = ((-1)**bit_signo)*(1+mantisa_decimal)*(2**exponente_base_dos) #uso de la formula para calcular el número
+    
+    print("El número en formato IEEE {0} en decimal es: {1}".format(numero_binario,decimal))
+    
+    '''for i in mantisa_original: #recuperamos los elementos de la mantisa que corresponden al entero considerando el primer 1
         numero_iteraciones = numero_iteraciones + 1
         if numero_iteraciones <= exponente_original:
             binarios_del_entero = binarios_del_entero + i
@@ -209,7 +229,7 @@ def IEEE_a_decimal():
             fraccion_decimal = fraccion_decimal + 2**contador_potencia_negativa
     
     decimal = entero_decimal + fraccion_decimal 
-    print("El número en formato IEEE {0} en decimal es: {1}".format(numero_binario,signo+str(decimal)))
+    print("El número en formato IEEE {0} en decimal es: {1}".format(numero_binario,signo+str(decimal)))'''
                        
         
         
