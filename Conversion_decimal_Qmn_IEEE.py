@@ -68,13 +68,13 @@ def Q88_a_decimal():
                 cambio = 1
             if cambio == 0:
                 binario_entero = binario_entero + i
-                print(binario_entero)
+                #print(binario_entero)
             else:
                 if i == ".":
                     continue
                 else:
                     binario_decimal = binario_decimal + i
-                    print(binario_decimal)
+                    #print(binario_decimal)
     
     for i in binario_entero:
         contador_potencia = contador_potencia - 1
@@ -104,27 +104,27 @@ def decimal_a_IEEE():
     IEEE = "" #almacena la conversión final
     
     numero_decimal = float(input("Introduce un número decimal\n"))
-    print("ND: ",numero_decimal)
+    #print("ND: ",numero_decimal)
     if numero_decimal < 0:
         bit_signo = 1
     else:
         bit_signo = 0
     
     parte_entera = int(numero_decimal)
-    print("Parte entera: ",parte_entera)
+    #print("Parte entera: ",parte_entera)
     parte_decimal = abs(numero_decimal)-abs(parte_entera)
-    print("Parte decimal: ",parte_decimal)
+    #print("Parte decimal: ",parte_decimal)
     
     parte_entera_bin = (bin(parte_entera)[2:])
-    print("Parte entera bin: ",parte_entera_bin)
+    #print("Parte entera bin: ",parte_entera_bin)
     parte_decimal_bin = fraccion_a_binario(parte_decimal,15)
-    print("Parte decimal bin: ",parte_decimal_bin)
+    #print("Parte decimal bin: ",parte_decimal_bin)
     
     lugares_recorridos = len(parte_entera_bin) - 1
-    print("Lugares: ",lugares_recorridos)
+    #print("Lugares: ",lugares_recorridos)
     exponente = 127 + lugares_recorridos
     exponente_binario = bin(exponente)[2:]
-    print("Exponente : ",exponente_binario)
+    #print("Exponente : ",exponente_binario)
     
     for i in parte_entera_bin:
         if salto == 1:
@@ -139,7 +139,7 @@ def decimal_a_IEEE():
     mantisa = mantisa[:23]
     #print("la longitud de la mantisa es "+str(len(mantisa)))
     
-    print("Mantisa: ",mantisa)
+    #print("Mantisa: ",mantisa)
     
     IEEE = str(bit_signo) + "-" + exponente_binario + "-" + mantisa
     print("El número {0} se representa como {1} en formato IEEE-754".format(numero_decimal, IEEE))
@@ -162,9 +162,9 @@ def IEEE_a_decimal():
     
     mantisa_decimal = 0 #almacena el equivalente de la mantisa en número decimal 
     
-    numero_binario = input("Introduce el binario a convertir en formato x-xxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx (respetando las separaciones)\n")
+    numero_binario = input("Introduce el binario en formato IEEE754 a convertir\n")
     bit_signo = int(numero_binario[0])
-    print("BS: ",bit_signo,"T: ",type(bit_signo))
+    #print("BS: ",bit_signo,"T: ",type(bit_signo))
     if bit_signo == 0:
         signo = " "
     elif bit_signo == 1:
@@ -172,18 +172,18 @@ def IEEE_a_decimal():
     
     for i in numero_binario: #aqui se recupera el exponente E
         numero_iteraciones = numero_iteraciones + 1
-        if numero_iteraciones > 2:
+        if numero_iteraciones > 1:
             exponente_binario_original = exponente_binario_original + i
-        if numero_iteraciones >= 10:
+        if numero_iteraciones >= 9:
             break
         
     numero_iteraciones = 0  
        
     for i in numero_binario: #aqui se recupera la mantisa
         numero_iteraciones = numero_iteraciones + 1
-        if numero_iteraciones > 11:
+        if numero_iteraciones > 10:
             mantisa_original = mantisa_original + i
-        if numero_iteraciones > 38:
+        if numero_iteraciones > 39:
             break 
     
     for i in exponente_binario_original: #Se convierte E a decimal
